@@ -19,8 +19,7 @@ def distribution(data,title,x_label,y_label,filename):
 	"""
 
 	# 'kde=True' adds a Kernel Density Estimation line
-	# 'bins' controls the number of bars
-	sns.histplot(data, kde=True, bins=20)
+	sns.histplot(data)
 
 	# 3. Add titles and labels
 	plt.title(title)
@@ -29,6 +28,7 @@ def distribution(data,title,x_label,y_label,filename):
 
 	# 4. Show the plot
 	plt.savefig(filename)
+	plt.close()
 
 
 """
@@ -64,4 +64,8 @@ def t_test(a,b):
 
 
 df = pd.read_pickle("X_train.pkl")
+print(df["Dependent_count"].describe())
+
 distribution(df["Customer_Age"],"Customer Age Distribution","Customer Age","Frequency","output/Customer Age Distribution")
+distribution(df["Dependent_count"],"Dependent Distribution","Number of Dependents","Frequency","output/Dependent Distribution")
+distribution(df["Credit_Limit"],"Credit Limit Distribution","Credit Limit","Frequency","output/Credit Limit Distribution")
