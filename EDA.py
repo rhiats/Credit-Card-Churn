@@ -8,6 +8,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt 
 from scipy.stats import mannwhitneyu
+from scipy.stats import chi2_contingency
 
 """
 	Distribtuion of Continuous Variables
@@ -40,7 +41,7 @@ def mannwhitney(batch_1,batch_2):
 		batch2 (np.array): Group 2
 	"""
 	stat, p_value = mannwhitneyu(batch_1, batch_2)
-	print('Statistics=%.2f, p=%.2f' % (stat, p_value))
+	print('Mann Whitney Statistics=%.2f, p=%.2f' % (stat, p_value))
 	alpha = 0.05
 	if p_value < alpha:
 	    print('Reject Null Hypothesis (Significant difference between two samples)')
@@ -125,6 +126,17 @@ def barplot(dataframe,feature,titleGraph,filename):
 	plt.close()
 
 
+def chi_square(var1, var2):
+	"""
+		Perform Chi square hypothesis test.
+	"""
+	contingency_table = pd.crosstab(var1, var2)
+	#print(contingency_table)
+
+	chi2, p_value, dof, expected = chi2_contingency(contingency_table)
+
+	print("Chi Square\n Chi Value: {} \n P Value: {} \n DOF: {} \n Expected: {} \n".format(chi2, p_value, dof, expected))
+
 df = pd.read_pickle("X_train.pkl")
 df_y = pd.read_pickle("y_train.pkl")
 
@@ -152,8 +164,11 @@ mannwhitney(existing_customer_credit_limit_df,attrited_customer_credit_limit_df)
 barplot(df,"Gender","Frequency of Each Gender", "output/gender_freq")
 barplot(df,"Education_Level","Frequency of Each Education Level", "output/Education_Level_freq")
 barplot(df,"Marital_Status","Frequency of Marital Status", "output/Marital_Status_freq")
+barplot(df,"Income_Category","Frequency of Income Category", "output/Income_Category_freq")
+barplot(df,"Card_Category","Frequency of Card Category", "output/Card_Category_freq")
 
 
+chi_square(df['Income_Category'], df['Attrition_Flag'])
 
 
 
