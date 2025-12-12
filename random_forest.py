@@ -108,8 +108,11 @@ score = f1_score(y_valid, y_pred)
 print("F1 Score: {}".format(score)) 
 """
 
+#Confusion Matrix
+
 
 
 #F1 Score Iteration 1: 0.7452054794520548
 #F1 Score Interation 2: 0.7493112947658402 (Add Avg_Trans_Amt)
 #F1 Score Interation 3: 0.7613941018766756 (Add TransCt_x_Inactive)
+#f1 Score Iteration 4: 0.7643979057591623 (Random Search)
