@@ -37,7 +37,9 @@ X_train['TransCt_x_Inactive'] = X_train['Total_Trans_Ct'] * X_train['Months_Inac
 
 X_train['Low_Activity'] = (X_train['Total_Trans_Ct'] < X_train['Total_Trans_Ct'].median()).astype(int) #Low activity based on credit card activity
 
-X_train['High_Credit_User'] = (X_train['Credit_Limit'] > X_train['Credit_Limit'].quantile(0.75)).astype(int)
+X_train['High_Credit_User'] = (X_train['Credit_Limit'] > X_train['Credit_Limit'].quantile(0.75)).astype(int) #Low activity based on credit card activity
+
+X_train['Dormancy_Score'] = X_train['Months_Inactive_12_mon'] / 12
 
 
 
@@ -59,6 +61,8 @@ df_v['TransCt_x_Inactive'] = df_v['Total_Trans_Ct'] * df_v['Months_Inactive_12_m
 df_v['Low_Activity'] = (df_v['Total_Trans_Ct'] < df_v['Total_Trans_Ct'].median()).astype(int)
 
 df_v['High_Credit_User'] = (df_v['Credit_Limit'] > df_v['Credit_Limit'].quantile(0.75)).astype(int)
+
+df_v['Dormancy_Score'] = df_v['Months_Inactive_12_mon'] / 12
 
 
 classifier = RandomForestClassifier(n_estimators=100, random_state=42)
