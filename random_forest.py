@@ -35,6 +35,8 @@ X_train['Age_x_CreditLimit'] = X_train['Customer_Age'] * X_train['Credit_Limit']
 
 X_train['TransCt_x_Inactive'] = X_train['Total_Trans_Ct'] * X_train['Months_Inactive_12_mon']
 
+X_train['Low_Activity'] = (X_train['Total_Trans_Ct'] < X_train['Total_Trans_Ct'].median()).astype(int) #Low activity based on credit card activity
+
 
 
 
@@ -51,6 +53,8 @@ df_v['Trans_per_Active_Month'] = df_v['Total_Trans_Ct'] / (12 - df_v['Months_Ina
 df_v['Age_x_CreditLimit'] = df_v['Customer_Age'] * df_v['Credit_Limit']
 
 df_v['TransCt_x_Inactive'] = df_v['Total_Trans_Ct'] * df_v['Months_Inactive_12_mon']
+
+df_v['Low_Activity'] = (df_v['Total_Trans_Ct'] < df_v['Total_Trans_Ct'].median()).astype(int)
 
 
 classifier = RandomForestClassifier(n_estimators=100, random_state=42)
