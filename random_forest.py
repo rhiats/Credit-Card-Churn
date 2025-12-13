@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix
 
 
 df = pd.read_pickle("X_train.pkl")
@@ -69,7 +71,7 @@ df_v['Low_Activity'] = (df_v['Total_Trans_Ct'] < df_v['Total_Trans_Ct'].median()
 
 #Search Grid
 
-rf = RandomForestClassifier(random_state=42)
+rf = RandomForestClassifier(random_state=42, class_weight='balanced')
 
 param_dist = {
     'n_estimators': [100, 200, 400, 600],
@@ -77,7 +79,7 @@ param_dist = {
     'min_samples_split': [2, 5, 10, 20],
     'min_samples_leaf': [1, 2, 4, 8],
     'max_features': ['sqrt', 'log2', 0.5, None],
-    'bootstrap': [True, False]
+    'bootstrap': [True, False],
 }
 
 rs = RandomizedSearchCV(
@@ -109,6 +111,22 @@ print("F1 Score: {}".format(score))
 """
 
 #Confusion Matrix
+# Display the confusion matrix
+cm = confusion_matrix(y_valid, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['1',"0"])
+disp.plot(cmap=plt.cm.Blues) # You can customize the colormap
+plt.show()
+
+# To display a normalized confusion matrix (by 'true' labels, i.e., by row)
+disp_norm = ConfusionMatrixDisplay.from_estimator(
+    best_rf, df_v, y_valid,
+    display_labels=['1',"0"],
+    cmap=plt.cm.Blues,
+    normalize='true' # 'true', 'pred', or 'all'
+)
+disp_norm.ax_.set_title("Normalized Confusion Matrix")
+plt.show()
+
 
 
 
