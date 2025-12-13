@@ -71,7 +71,7 @@ df_v['Low_Activity'] = (df_v['Total_Trans_Ct'] < df_v['Total_Trans_Ct'].median()
 
 #Search Grid
 
-rf = RandomForestClassifier(random_state=42, class_weight='balanced')
+rf = RandomForestClassifier(random_state=42)
 
 param_dist = {
     'n_estimators': [100, 200, 400, 600],
@@ -80,6 +80,7 @@ param_dist = {
     'min_samples_leaf': [1, 2, 4, 8],
     'max_features': ['sqrt', 'log2', 0.5, None],
     'bootstrap': [True, False],
+    'class_weight': ['balanced', 'balanced_subsample']
 }
 
 rs = RandomizedSearchCV(
