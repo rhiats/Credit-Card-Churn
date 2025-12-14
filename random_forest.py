@@ -28,45 +28,34 @@ y_valid= df_y_v.replace({'Attrited Customer': 1, 'Existing Customer': 0})
 
 X_train = df[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
 
-X_train['Avg_Trans_Amt'] = X_train['Total_Trans_Amt'] / X_train['Total_Trans_Ct'] #Captures spending intensity per swipe.
-
-X_train['Trans_Amt_to_Limit'] = X_train['Total_Trans_Amt'] / X_train['Credit_Limit'] #utilization amount
-
-X_train['Trans_per_Active_Month'] = X_train['Total_Trans_Ct'] / (12 - X_train['Months_Inactive_12_mon']) #Transactions per Month Active
-
-X_train['Age_x_CreditLimit'] = X_train['Customer_Age'] * X_train['Credit_Limit'] #combinatorial properties
-
-X_train['TransCt_x_Inactive'] = X_train['Total_Trans_Ct'] * X_train['Months_Inactive_12_mon']
-
-X_train['Low_Activity'] = (X_train['Total_Trans_Ct'] < X_train['Total_Trans_Ct'].median()).astype(int) #Low activity based on credit card activity
-
-#X_train['High_Credit_User'] = (X_train['Credit_Limit'] > X_train['Credit_Limit'].quantile(0.75)).astype(int) #Low activity based on credit card activity
-
-#X_train['Dormancy_Score'] = X_train['Months_Inactive_12_mon'] / 12
-
-
-
-
-
-
 df_v = df_v[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
 
-df_v['Avg_Trans_Amt'] = df_v['Total_Trans_Amt'] / df_v['Total_Trans_Ct']
+def feature_engineering(df):
+    """
+        Add engineered features to boost model performance
 
-df_v['Trans_Amt_to_Limit'] = df_v['Total_Trans_Amt'] / df_v['Credit_Limit']
+        @p: df: Dataframe with raw data
+        @r: df: Dataframe with engineered data
+    """
 
-df_v['Trans_per_Active_Month'] = df_v['Total_Trans_Ct'] / (12 - df_v['Months_Inactive_12_mon'])
+    df['Avg_Trans_Amt'] = df['Total_Trans_Amt'] / df['Total_Trans_Ct'] #Captures spending intensity per swipe.
 
-df_v['Age_x_CreditLimit'] = df_v['Customer_Age'] * df_v['Credit_Limit']
+    df['Trans_Amt_to_Limit'] = df['Total_Trans_Amt'] / df['Credit_Limit'] #utilization amount
 
-df_v['TransCt_x_Inactive'] = df_v['Total_Trans_Ct'] * df_v['Months_Inactive_12_mon']
+    df['Trans_per_Active_Month'] = df['Total_Trans_Ct'] / (12 - df['Months_Inactive_12_mon']) #Transactions per Month Active
 
-df_v['Low_Activity'] = (df_v['Total_Trans_Ct'] < df_v['Total_Trans_Ct'].median()).astype(int)
+    df['Age_x_CreditLimit'] = df['Customer_Age'] * df['Credit_Limit'] #combinatorial properties
 
-#df_v['High_Credit_User'] = (df_v['Credit_Limit'] > df_v['Credit_Limit'].quantile(0.75)).astype(int)
+    df['TransCt_x_Inactive'] = df['Total_Trans_Ct'] * df['Months_Inactive_12_mon']
 
-#df_v['Dormancy_Score'] = df_v['Months_Inactive_12_mon'] / 12
+    df['Low_Activity'] = (df['Total_Trans_Ct'] < df['Total_Trans_Ct'].median()).astype(int) #Low activity based on credit card activity
 
+    return df
+
+
+X_train = feature_engineering(X_train)
+
+df_v = feature_engineering(df_v)
 
 
 #Search Grid
@@ -135,3 +124,5 @@ plt.show()
 #F1 Score Interation 2: 0.7493112947658402 (Add Avg_Trans_Amt)
 #F1 Score Interation 3: 0.7613941018766756 (Add TransCt_x_Inactive)
 #f1 Score Iteration 4: 0.7643979057591623 (Random Search)
+#f1 Score Iteration 5: 0.7251732101616628 (No change)
+#F1 Score Iteration 6: 0.7325842696629213 (No change)
