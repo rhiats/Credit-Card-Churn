@@ -183,4 +183,10 @@ plt.plot([0, 1], [0, 1], 'k--', label='Chance Level (AUC = 0.5)') # Add the rand
 plt.title('Receiver Operating Characteristic (ROC) Curve Logistic Regression')
 plt.legend(loc="lower right")
 plt.show()
-#F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1)
+#F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1) #Logistic regression performs just as well as random forest, so I won't stack the models
+
+#Remove correlated features
+
+#Undersampling
+
+
