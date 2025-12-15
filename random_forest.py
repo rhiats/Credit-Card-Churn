@@ -12,6 +12,8 @@ from sklearn.metrics import f1_score
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import roc_curve, auc, RocCurveDisplay
+from sklearn.linear_model import LogisticRegression
 
 
 df = pd.read_pickle("X_train.pkl")
@@ -84,7 +86,7 @@ y_pred = best_rf.predict(df_v)
 
 score = f1_score(y_valid, y_pred)
 
-print("F1 Score: {}".format(score)) 
+print("F1 Score Random Forest: {}".format(score)) 
 
 print("Best RF:",best_rf)
 
@@ -118,6 +120,19 @@ disp_norm.ax_.set_title("Normalized Confusion Matrix")
 plt.show()
 
 
+#ROC Curve
+
+# 5. Calculate ROC curve metrics manually
+fpr, tpr, thresholds = roc_curve(y_valid, y_pred)
+roc_auc = auc(fpr, tpr) 
+
+# 6. Plot the ROC curve using the visualization API
+display = RocCurveDisplay.from_estimator(best_rf, df_v, y_valid, name="Random Forest")
+plt.plot([0, 1], [0, 1], 'k--', label='Chance Level (AUC = 0.5)') # Add the random chance line
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend(loc="lower right")
+plt.show()
+
 
 
 #F1 Score Iteration 1: 0.7452054794520548
@@ -126,3 +141,15 @@ plt.show()
 #f1 Score Iteration 4: 0.7643979057591623 (Random Search)
 #f1 Score Iteration 5: 0.7251732101616628 (No change)
 #F1 Score Iteration 6: 0.7325842696629213 (No change)
+
+
+#Logistic Regression
+logreg = LogisticRegression(random_state=16)
+logreg.fit(X_train, y_train)
+y_pred_lr = logreg.predict(df_v)
+
+score_lr = f1_score(y_valid, y_pred)
+
+print("F1 Score Logistic Regression: {}".format(score)) 
+
+#F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1)
