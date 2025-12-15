@@ -141,6 +141,7 @@ plt.show()
 #f1 Score Iteration 4: 0.7643979057591623 (Random Search)
 #f1 Score Iteration 5: 0.7251732101616628 (No change)
 #F1 Score Iteration 6: 0.7325842696629213 (No change)
+#F1 Score Random Forest 7: 0.7248322147651006 (No change)
 
 
 #Logistic Regression
