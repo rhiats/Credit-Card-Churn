@@ -152,4 +152,35 @@ score_lr = f1_score(y_valid, y_pred)
 
 print("F1 Score Logistic Regression: {}".format(score)) 
 
+
+#Confusion Matrix
+# Display the confusion matrix
+cm = confusion_matrix(y_valid, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['1',"0"])
+disp.plot(cmap=plt.cm.Blues) # You can customize the colormap
+plt.show()
+
+# To display a normalized confusion matrix (by 'true' labels, i.e., by row)
+disp_norm = ConfusionMatrixDisplay.from_estimator(
+    logreg, df_v, y_valid,
+    display_labels=['1',"0"],
+    cmap=plt.cm.Blues,
+    normalize='true' # 'true', 'pred', or 'all'
+)
+disp_norm.ax_.set_title("Normalized Confusion Matrix Logistic Regression")
+plt.show()
+
+
+#ROC Curve
+
+# 5. Calculate ROC curve metrics manually
+fpr, tpr, thresholds = roc_curve(y_valid, y_pred)
+roc_auc = auc(fpr, tpr) 
+
+# 6. Plot the ROC curve using the visualization API
+display = RocCurveDisplay.from_estimator(logreg, df_v, y_valid, name="Random Forest")
+plt.plot([0, 1], [0, 1], 'k--', label='Chance Level (AUC = 0.5)') # Add the random chance line
+plt.title('Receiver Operating Characteristic (ROC) Curve Logistic Regression')
+plt.legend(loc="lower right")
+plt.show()
 #F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1)
