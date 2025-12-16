@@ -195,6 +195,7 @@ plt.show()
 
 #Remove correlated features
 
+#Multistage sampling - cluster and then select random samples from those clusters
 
 
 
