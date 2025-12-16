@@ -32,6 +32,7 @@ X_train = df[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_
 
 df_v = df_v[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
 
+
 def feature_engineering(df):
     """
         Add engineered features to boost model performance
