@@ -16,8 +16,13 @@ from sklearn.metrics import roc_curve, auc, RocCurveDisplay
 from sklearn.linear_model import LogisticRegression
 
 
-df = pd.read_pickle("X_train.pkl")
-df_y = pd.read_pickle("y_train.pkl")
+#df = pd.read_pickle("X_train.pkl")
+#df_y = pd.read_pickle("y_train.pkl")
+
+##Undersampling
+df = pd.read_pickle("training_random_sample.pkl")
+df_y = df['y']
+
 
 df_v = pd.read_pickle("X_validation.pkl")
 df_y_v = pd.read_pickle("y_validation.pkl")
@@ -71,8 +76,8 @@ param_dist = {
     'min_samples_split': [2, 5, 10, 20],
     'min_samples_leaf': [1, 2, 4, 8],
     'max_features': ['sqrt', 'log2', 0.5, None],
-    'bootstrap': [True, False],
-    'class_weight': ['balanced', 'balanced_subsample']
+    'bootstrap': [True, False]
+    #'class_weight': ['balanced', 'balanced_subsample']
 }
 
 rs = RandomizedSearchCV(
@@ -143,6 +148,7 @@ plt.show()
 #f1 Score Iteration 5: 0.7251732101616628 (No change)
 #F1 Score Iteration 6: 0.7325842696629213 (No change)
 #F1 Score Random Forest 7: 0.7248322147651006 (No change)
+#F1 Score Random Forest 8: 0.6863905325443787 (Random sample majority class)
 
 
 #Logistic Regression
@@ -189,6 +195,6 @@ plt.show()
 
 #Remove correlated features
 
-#Undersampling
+
 
 
