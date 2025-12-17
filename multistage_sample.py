@@ -46,6 +46,23 @@ plt.ylabel('Inertia')
 plt.title('Elbow Method for Optimal k')
 plt.show()
 
+kmeans = KMeans(
+    n_clusters=5,
+    init='k-means++',
+    n_init=10,
+    random_state=42
+)
+
+clusters = kmeans.fit_predict(X_scaled)
+
+X_exist['Cluster'] = clusters
+
+
+#Size of 5 clusters
+
+cluster_sz = X_exist["Cluster"].value_counts()
+
+print("Cluster Sizes: {}".format(cluster_sz))
 
 
 
