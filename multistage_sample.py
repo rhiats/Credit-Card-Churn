@@ -23,7 +23,7 @@ X_exist = X[X["y"]=="Existing Customer"]
 X_attrit = X[X["y"]=="Attrited Customer"]
 
 X_exist = X_exist[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
-X_attrit = X_attrit[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
+X_attrit = X_attrit[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct',"y"]]
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X_exist)
@@ -58,6 +58,7 @@ kmeans = KMeans(
 clusters = kmeans.fit_predict(X_scaled)
 
 X_exist['Cluster'] = clusters
+X_exist['y'] = 'Existing Customer'
 
 
 #Size of 5 clusters
@@ -73,7 +74,9 @@ df_2 = X_exist[X_exist['Cluster']==2].sample(n=173, random_state=1)
 df_3 = X_exist[X_exist['Cluster']==3].sample(n=173, random_state=1)
 df_4 = X_exist[X_exist['Cluster']==4].sample(n=173, random_state=1)
 
-df = pd.concat([,X[X['y']=="Attrited Customer"]],ignore_index=True)
+df = pd.concat([df_0,df_1,df_2,df_3,df_4,X_attrit],ignore_index=True)
+
+df.to_pickle("training_multistage_sample.pkl")
 
 
 
