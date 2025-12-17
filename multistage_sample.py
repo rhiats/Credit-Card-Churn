@@ -26,6 +26,26 @@ X_exist = X[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_L
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X_exist)
 
+inertia = []
+
+K = range(1, 11)
+for k in K:
+    kmeans = KMeans(
+        n_clusters=k,
+        init='k-means++',
+        n_init=10,
+        random_state=42
+    )
+    kmeans.fit(X_scaled)
+    inertia.append(kmeans.inertia_)
+
+plt.figure()
+plt.plot(K, inertia, marker='o')
+plt.xlabel('Number of clusters (k)')
+plt.ylabel('Inertia')
+plt.title('Elbow Method for Optimal k')
+plt.show()
+
 
 
 
