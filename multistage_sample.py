@@ -20,8 +20,10 @@ print("Number of Attrited Customers are: {}".format(attrited_customer_num)) #(86
 X = X[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct','y']]
 
 X_exist = X[X["y"]=="Existing Customer"]
+X_attrit = X[X["y"]=="Attrited Customer"]
 
-X_exist = X[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
+X_exist = X_exist[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
+X_attrit = X_attrit[['Customer_Age','Dependent_count','Months_Inactive_12_mon','Credit_Limit','Total_Trans_Amt','Total_Trans_Ct']]
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X_exist)
@@ -62,7 +64,18 @@ X_exist['Cluster'] = clusters
 
 cluster_sz = X_exist["Cluster"].value_counts()
 
-print("Cluster Sizes: {}".format(cluster_sz))
+print("Cluster Sizes: {}".format(cluster_sz)) #Sample 173 from each cluster
+
+#Sample 173 from each cluster
+df_0 = X_exist[X_exist['Cluster']==0].sample(n=173, random_state=1)
+df_1 = X_exist[X_exist['Cluster']==1].sample(n=173, random_state=1)
+df_2 = X_exist[X_exist['Cluster']==2].sample(n=173, random_state=1)
+df_3 = X_exist[X_exist['Cluster']==3].sample(n=173, random_state=1)
+df_4 = X_exist[X_exist['Cluster']==4].sample(n=173, random_state=1)
+
+df = pd.concat([,X[X['y']=="Attrited Customer"]],ignore_index=True)
+
+
 
 
 
