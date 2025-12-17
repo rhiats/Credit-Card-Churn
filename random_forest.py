@@ -20,8 +20,13 @@ from sklearn.linear_model import LogisticRegression
 #df_y = pd.read_pickle("y_train.pkl")
 
 ##Undersampling
-df = pd.read_pickle("training_random_sample.pkl")
+#df = pd.read_pickle("training_random_sample.pkl")
+#df_y = df['y']
+
+##Multi-stage Sampling
+df = pd.read_pickle("training_multistage_sample.pkl")
 df_y = df['y']
+
 
 
 df_v = pd.read_pickle("X_validation.pkl")
@@ -149,6 +154,7 @@ plt.show()
 #F1 Score Iteration 6: 0.7325842696629213 (No change)
 #F1 Score Random Forest 7: 0.7248322147651006 (No change)
 #F1 Score Random Forest 8: 0.6863905325443787 (Random sample majority class)
+#F1 Score Random Forest 9: 0.6892430278884463 (Multistage sample majority class)
 
 
 #Logistic Regression
@@ -194,8 +200,6 @@ plt.show()
 #F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1) #Logistic regression performs just as well as random forest, so I won't stack the models
 
 #Remove correlated features
-
-#Multistage sampling - cluster and then select random samples from those clusters
 
 
 
