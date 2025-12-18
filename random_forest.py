@@ -14,6 +14,7 @@ from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_curve, auc, RocCurveDisplay
 from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
 
 
 #df = pd.read_pickle("X_train.pkl")
@@ -199,8 +200,24 @@ plt.legend(loc="lower right")
 plt.show()
 #F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1) #Logistic regression performs just as well as random forest, so I won't stack the models
 
-#X-G Boost
+#X-G Boost (Default settings)
 
+xgb = XGBClassifier(
+    n_estimators=300,
+    max_depth=6,
+    learning_rate=0.05,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    objective='binary:logistic',
+    eval_metric='logloss',
+    random_state=42,
+    n_jobs=-1
+)
 
+xgb.fit(X_train, y_train)
+
+y_pred = xgb.predict(df_v)
+print("XG Boost F1:", f1_score(y_valid, y_pred))
+#Iteration 1 XG Boost F1: 0.6907630522088354 (Default settings, multistage sampling)
 
 
