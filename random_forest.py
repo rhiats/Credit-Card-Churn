@@ -199,7 +199,8 @@ plt.legend(loc="lower right")
 plt.show()
 #F1 Score Logistic Regression: 0.7240618101545254 (Iteration 1) #Logistic regression performs just as well as random forest, so I won't stack the models
 
-#Remove correlated features
+#X-G Boost
+
 
 
 
